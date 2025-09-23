@@ -5,7 +5,7 @@ void main()
 {
     char input[10];
 
-    int montant;
+    float montant;
 
     const int interet = 6;
 
@@ -17,7 +17,7 @@ void main()
     {
         fgets(input, sizeof(input), stdin);
 
-        int v = sscanf(input, "%d", &montant); // 3 . 4
+        int v = sscanf(input, "%f", &montant); // 3 . 4
 
         if (v != 1)
         {
@@ -31,8 +31,9 @@ void main()
                 printf("valeur incorrecte, donner un entier positif svp: ");
                 continue;
             }
-            float percentageDebt1 = (debt * 0.06) / 12; // 100
+            float percentageDebt1 = (debt * 0.06) / 12.0f; // 100
             float secOne = debt - montant + percentageDebt1;
+
             printf("Solde restant apres le premier paiement %.2f\n", secOne);
             float percentageDebt2 = (secOne * 0.06) / 12; // 100
             float secTwo = secOne - montant + percentageDebt2;
