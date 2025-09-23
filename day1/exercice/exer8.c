@@ -33,16 +33,15 @@ void main()
             }
             float percentageDebt1 = (debt * 0.06) / 12; // 100
             float secOne = debt - montant + percentageDebt1;
-
             printf("Solde restant apres le premier paiement %.2f\n", secOne);
-            // float percentageDebt2 = (secOne * 0.06) / 12; // 100
-            // float secTwo = percentageDebt2 - montant + percentageDebt2;
+            float percentageDebt2 = (secOne * 0.06) / 12; // 100
+            float secTwo = secOne - montant + percentageDebt2;
 
-            // printf("Solde restant apres le premier paiement %.2f\n", secTwo);
-            // float percentageDebt3 = (secTwo * 0.06) / 12; // 100
-            // float secTree = percentageDebt3 - montant + percentageDebt3;
+            printf("Solde restant apres le premier paiement %.2f\n", secTwo);
+            float percentageDebt3 = (secTwo * 0.06) / 12; // 100
+            float secTree = secTwo - montant + percentageDebt3;
 
-            // printf("Solde restant apres le premier paiement %.2f\n", secTree);
+            printf("Solde restant apres le premier paiement %.2f\n", secTree);
 
             break;
         }
