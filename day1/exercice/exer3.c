@@ -13,7 +13,8 @@ void main()
     {
         fgets(input, sizeof(input), stdin);
 
-        int v = sscanf(input, "%d", &r);
+        int v = sscanf(input, "%d", &r); // 3 . 4
+
         if (v != 1)
         {
             printf("valeur incorrecte, donner un entier positif svp: ");
