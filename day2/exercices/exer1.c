@@ -25,7 +25,7 @@ void main()
         }
         else
         {
-            int v = sscanf(ISBN, "%3s-%1s-%3s-%5s-%1s", &prefix, &groupe, &codeEditeur, &numArticle, &chifferDeControle);
+            int v = sscanf(ISBN, "%10s-%10s-%10s-%10s-%10s", &prefix, &groupe, &codeEditeur, &numArticle, &chifferDeControle);
             if (v != 5)
             {
                 printf("l' isbn n'est pas valid\n");
