@@ -11,7 +11,7 @@ void main()
     if (v == 2)
     {
         int gcd = 1;
-        printf("numberone = %d, numbertwo = %d\n", numberone, numbertwo);
+        // printf("numberone = %d, numbertwo = %d\n", numberone, numbertwo);
         int min = numberone < numbertwo ? numberone : numbertwo;
         for (int i = 1; i <= min; i++)
         {
@@ -23,5 +23,9 @@ void main()
         numberone = numberone / gcd;
         numbertwo = numbertwo / gcd;
         printf("Reduced fraction: %d/%d\n", numberone, numbertwo);
+    }
+    else
+    {
+        printf("Invalid input\n");
     }
 }

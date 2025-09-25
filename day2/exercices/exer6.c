@@ -10,7 +10,6 @@ void main()
     printf("Entrez deux nombres entiers  :");
     fgets(input, sizeof(input), stdin);
     int v = sscanf(input, "%d %d", &firstNumber, &secondNumber);
-    printf("v=%d\n", v);
 
     if (v != 2)
     {
