@@ -18,9 +18,14 @@ void main()
     for (int i = 1; i < number; i++)
     {
         int carre = i * i;
+
         if (carre <= number)
         {
-            printf("%d\n", carre);
+            int isPair = carre % 2;
+            if (isPair == 0)
+            {
+                printf("%d\n", carre);
+            }
         }
         else
         {
