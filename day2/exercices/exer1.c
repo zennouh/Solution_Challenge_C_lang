@@ -5,13 +5,13 @@
 void main()
 {
 
-    char ISBN[18];
+    char ISBN[100];
 
-    char prefix[4];
-    char groupe[2];
-    char codeEditeur[4];
-    char numArticle[6];
-    char chifferDeControle[2];
+    char prefix[10];
+    char groupe[10];
+    char codeEditeur[10];
+    char numArticle[10];
+    char chifferDeControle[10];
 
     printf("enter le l'isbn:");
     do

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-char letterToDigit(char c);
+char getLetter(char c);
 
 void main()
 {
@@ -18,16 +18,15 @@ void main()
         char c = phone[i];
         if (isalpha(c))
         {
-            c = toupper(c);
-            phone[i] = letterToDigit(c);
+            c = toupper(c); // convert to uppercase
+            phone[i] = getLetter(c);
         }
     }
     printf("Numeric phone number: %s", phone);
-
     return;
 }
 
-char letterToDigit(char c)
+char getLetter(char c)
 {
     switch (c)
     {
