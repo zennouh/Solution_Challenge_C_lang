@@ -2,13 +2,16 @@
 #include <string.h>
 #include <stdio.h>
 // #include "enums.c";
+int indexOFID(int id, int *ids, int lastID);
 
-void addAirplan(int *id, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int index)
+int addAirplan(char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int index)
 {
 
     printf("Enter le model de la avoin: ");
     getchar();
     fgets(model[index], 100, stdin);
+    /// remove \n
+    model[index][strcspn(model[index], "\n")] = '\0';
 
     printf("Enter la capacity de l'avoi: ");
     scanf("%d", &capacity[index]);
@@ -17,11 +20,12 @@ void addAirplan(int *id, char (*model)[100], int *capacity, int *status, char (*
     if (status[index] > 3 || status[index] <= 0)
     {
         printf("le nomber qu'est vous entrez n'est pas disponible\n");
-        return;
+        return 0;
     }
     printf("Enter la date de la enter d'avoin (jj/mm/yyyy): ");
     scanf("%s", &enterDate[index]);
     printf("L'avoin est ajouter successfully\n");
+    return 1;
 }
 
 int getSearch(int *ids, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int index)
@@ -37,15 +41,18 @@ int getSearch(int *ids, char (*model)[100], int *capacity, int *status, char (*e
         printf("Enter l'id: ");
         int id;
         scanf("%d", &id);
+
         while (getchar() != '\n')
             ;
-        if (id > index)
+        int indexOfID = indexOFID(id, ids, index);
+        if (indexOfID == -1)
         {
             printf("id n'est pas existe\n");
             return -1;
         }
+
         char ste[10];
-        switch (status[id])
+        switch (status[indexOfID])
         {
         case 1:
             strcpy(ste, "En vol");
@@ -60,14 +67,15 @@ int getSearch(int *ids, char (*model)[100], int *capacity, int *status, char (*e
         default:
             break;
         }
-        printf("model est : %s, capacity est : %d, status est %s, date d'enter est : %s\n", model[id], capacity[id], ste, enterDate[id]);
-        return id;
+        printf("model est : %s, capacity est : %d, status est %s, date d'enter est : %s\n", model[indexOfID], capacity[indexOfID], ste, enterDate[indexOfID]);
+        return indexOfID;
     }
     else if (searchType == 2)
     {
         char searchModel[100];
         printf("Enter le model d'avion: ");
         fgets(searchModel, 100, stdin);
+        searchModel[strcspn(searchModel, "\n")] = '\0';
         int isExiste = 0;
         for (int i = 0; i < index; i++)
         {
@@ -109,7 +117,7 @@ int getSearch(int *ids, char (*model)[100], int *capacity, int *status, char (*e
     }
 
     printf("le nomber qu'est vous entrez n'est pas disponible\n");
-    return -1;
+    return -2;
 }
 
 void update(char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int currentIndex)
@@ -119,29 +127,52 @@ void update(char (*model)[100], int *capacity, int *status, char (*enterDate)[10
     printf("pour modifier le status d'avoin entez 3\n");
     printf("pour modifier la date d'enter d'avoin entez 4\n");
     int userchoise;
+    printf("votre choix est: ");
     scanf("%d", &userchoise);
+    while (getchar() != '\n')
+        ;
+
     switch (userchoise)
     {
     case 1:
     {
-        char input[50];
-        fgets(input, 50, stdin);
-
+        char input[100];
+        printf("la novelle value est: ");
+        fgets(input, 100, stdin);
+        strcpy(model[currentIndex], input);
+        printf("\n");
+        printf("module is: %s", model[currentIndex]);
+        printf("\n");
         break;
     }
     case 2:
     {
+        int cap;
+        printf("la novelle value est: ");
+        scanf("%d", &cap);
+        while (getchar() != '\n')
+            ;
+        capacity[currentIndex] = cap;
 
         break;
     }
     case 3:
     {
+        int sts;
+        printf("la nouvelle value (1. En vol, 2. Disponible, 3.En maintenance): ");
+        scanf("%d", &sts);
+        while (getchar() != '\n')
+            ;
+        status[currentIndex] = sts;
 
         break;
     }
     case 4:
     {
-
+        char input[100];
+        printf("la novelle value est: ");
+        fgets(input, 100, stdin);
+        strcpy(enterDate[currentIndex], input);
         break;
     }
 
@@ -151,4 +182,100 @@ void update(char (*model)[100], int *capacity, int *status, char (*enterDate)[10
         break;
     }
     }
+}
+
+void delete(int *ids, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int currentIndex, int lastIndex)
+{
+
+    // for (int i = currentIndex; i <= lastIndex; i++)
+    // {
+    // char ele[100] = model[i];
+    // if (i == lastIndex)
+    // {
+    //     strcpy(model[lastIndex], "null");
+    //     capacity[lastIndex] = -1;
+    //     status[lastIndex] = -1;
+    //     ids[lastIndex] = -1;
+    //     strcpy(enterDate[lastIndex], "null");
+    // }
+    // else
+    // {
+    //     strcpy(model[i], model[i + 1]);
+    //     capacity[i] = capacity[i + 1];
+    //     status[i] = status[i + 1];
+    //     ids[i] = ids[i + 1];
+    //     strcpy(enterDate[i], enterDate[i + 1]);
+    // }
+    strcpy(model[currentIndex], "");
+    capacity[currentIndex] = -1;
+    status[currentIndex] = -1;
+    ids[currentIndex] = -1;
+    strcpy(enterDate[currentIndex], "");
+    // }
+}
+
+void displayTable(int *ids, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int lastIndex)
+
+{
+
+    if (lastIndex == -1)
+    {
+        printf("==========>>>> nous n'avons pas encore des avoin\n");
+    }
+    printf("||\tid\t\t||");
+    printf("\tmodel\t\t||");
+    printf("\tcapacite\t||");
+    printf("\tstatus\t\t||");
+    printf("\tdate enter\t\t||");
+    printf("\n");
+    for (int i = 0; i <= lastIndex; i++)
+    {
+        if (capacity[i] == -1 && status[i] == -1)
+            continue;
+        printf("------------------------------------------------------------------------------------------------------------------------------------------------");
+        printf("\n");
+        printf("||\t%d\t\t||", ids[i]);
+        printf("\t%s\t\t||", model[i]);
+        printf("\t%d\t\t||", capacity[i]);
+
+        char ste[10];
+        switch (status[i])
+        {
+        case 1:
+            strcpy(ste, "En vol");
+            break;
+        case 2:
+            strcpy(ste, "Disponible");
+            break;
+        case 3:
+            strcpy(ste, "En maintenance");
+            break;
+
+        default:
+            break;
+        }
+
+        printf("\t%s\t\t||", ste);
+        printf("\t%s\t\t||", enterDate[i]);
+        printf("\n");
+    }
+}
+
+void sort(int *ids, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int lastIndex)
+{
+
+    printf("choisir votre option pour trier les avois, 1. par capacity, 2. par model: ");
+    // scanf("%d");
+}
+
+int indexOFID(int id, int *ids, int lastID)
+{
+    for (int i = 0; i <= lastID; i++)
+    {
+        if (id == ids[i])
+        {
+            return i;
+        }
+    }
+    return -1;
 }

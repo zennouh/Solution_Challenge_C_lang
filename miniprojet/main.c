@@ -5,7 +5,7 @@
 
 void main()
 {
-    int lastIndex = 0;
+    int lastIndex = -1;
 
     int ids[100];
     char model[100][100];
@@ -28,41 +28,61 @@ void main()
         printf("le choix est: ");
 
         scanf("%d", &userChoise);
+
         switch (userChoise)
         {
         case 1:
-
-            addAirplan(ids, model, capacities, status, enterDate, lastIndex);
-            ids[lastIndex] = lastIndex;
+        {
             lastIndex++;
-
+            int result = addAirplan(model, capacities, status, enterDate, lastIndex);
+            if (result)
+            {
+                ids[lastIndex] = lastIndex + 1;
+            }
+            else
+            {
+                lastIndex--;
+            }
             break;
+        }
         case 2:
         {
             int foundId = getSearch(ids, model, capacities, status, enterDate, lastIndex);
-            printf("L'id est :%d\n", foundId);
+
+            update(model, capacities, status, enterDate, foundId);
+            for (int i = 0; i < lastIndex; i++) // 10 just for now
+            {
+                printf("%d, %s, %d,%d, %s\n", ids[i], model[i], capacities[i], status[i], enterDate[i]);
+            }
 
             break;
         }
         case 3:
-            printf("choix 3");
+        {
+            int foundIndex = getSearch(ids, model, capacities, status, enterDate, lastIndex);
 
+            printf("found index, %d\n", foundIndex);
+            if (foundIndex == -1 || foundIndex == -2)
+            {
+                // printf("no avoin disponible avec cette id");
+                break;
+            }
+
+            delete(ids, model, capacities, status, enterDate, foundIndex, lastIndex);
+            // lastIndex--;
             break;
+        }
         case 4:
             getSearch(ids, model, capacities, status, enterDate, lastIndex);
-
             break;
         case 5:
-            printf("choix 5");
-
+            displayTable(ids, model, capacities, status, enterDate, lastIndex);
             break;
         case 6:
             printf("choix 6");
 
             break;
         case 7:
-            printf("choix 7");
-
             return;
 
         default:
@@ -73,7 +93,3 @@ void main()
 
     } while (userChoise != 0);
 }
-// for (int i = 0; i < lastIndex; i++) // 10 just for now
-// {
-//     printf("%d, %s, %d,%d, %s\n", ids[i], model[i], capacities[i], status[i], enterDate[i]);
-// }

@@ -28,7 +28,7 @@ void main()
             double monthlyRate = annualRate / 12.0;
             // for (int m = 0; m < 12; i++)
             // {
-            value[i] += annualRate * value[i];
+            value[i] += monthlyRate * value[i];
             // value[i] += monthlyRate * value[i];
             // }
 
