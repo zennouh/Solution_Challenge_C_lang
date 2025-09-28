@@ -1,11 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "headers.h"
 // #include "functions.c"
 // #include "enums.c"
 
 void main()
 {
-    int lastIndex = -1;
+
+       int lastIndex = -1;
 
     int ids[100];
     char model[100][100];
@@ -25,7 +27,7 @@ void main()
         printf("5. saisir 5 pour la afficher un avion\n");
         printf("6. saisir 6 pour l' order d'affiche un avion\n");
         printf("7. saisir 7 pour la sortier\n");
-        printf("le choix est: ");
+        printf("======>>>>> le choix est: ");
 
         scanf("%d", &userChoise);
 

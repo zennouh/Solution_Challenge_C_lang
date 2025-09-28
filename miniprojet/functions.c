@@ -25,15 +25,14 @@ int addAirplan(char (*model)[100], int *capacity, int *status, char (*enterDate)
 
     printf("Enter la date de la enter d'avoin (jj/mm/yyyy): ");
     scanf("%s", &enterDate[index]);
-    printf("date entrie est %s", enterDate[index]);
-    printf("L'avoin est ajouter successfully\n");
+    printf("====>>> L'avoin est ajouter successfully\n");
     return 1;
 }
 
 int getSearch(int *ids, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int index)
 {
     int searchType;
-    printf("would like to shearch by id or model (1.id, 2.model): ");
+    printf("vous souhaitez rechercher par identifiant ou modèle (1.id, 2.model) : ");
     scanf("%d", &searchType);
     while (getchar() != '\n')
         ;
@@ -141,6 +140,7 @@ void update(char (*model)[100], int *capacity, int *status, char (*enterDate)[10
         char input[100];
         printf("la novelle value est: ");
         fgets(input, 100, stdin);
+        input[strcspn(input, "\n")] = '\0';
         strcpy(model[currentIndex], input);
         printf("\n");
         printf("module is: %s", model[currentIndex]);
@@ -189,25 +189,6 @@ void update(char (*model)[100], int *capacity, int *status, char (*enterDate)[10
 void delete(int *ids, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int currentIndex, int lastIndex)
 {
 
-    // for (int i = currentIndex; i <= lastIndex; i++)
-    // {
-    // char ele[100] = model[i];
-    // if (i == lastIndex)
-    // {
-    //     strcpy(model[lastIndex], "null");
-    //     capacity[lastIndex] = -1;
-    //     status[lastIndex] = -1;
-    //     ids[lastIndex] = -1;
-    //     strcpy(enterDate[lastIndex], "null");
-    // }
-    // else
-    // {
-    //     strcpy(model[i], model[i + 1]);
-    //     capacity[i] = capacity[i + 1];
-    //     status[i] = status[i + 1];
-    //     ids[i] = ids[i + 1];
-    //     strcpy(enterDate[i], enterDate[i + 1]);
-    // }
     ///////////
     // strcpy(model[currentIndex], "");
     capacity[currentIndex] = -1;
@@ -312,7 +293,6 @@ void sort(int *ids, char (*model)[100], int *capacity, int *status, char (*enter
             for (int j = i + 1; j <= lastIndex; j++)
             {
                 int result = strcmp(model[i], model[j]);
-
                 if (result > 0)
                 {
                     int saveids = ids[i];
@@ -344,7 +324,7 @@ void sort(int *ids, char (*model)[100], int *capacity, int *status, char (*enter
     }
     else
     {
-        printf("tu est enter un numero, qui est n'est pas en 1, 2 ");
+        printf("tu est enter un numero, qui est n'est pas en 1, 2\n");
         return;
     }
 }
