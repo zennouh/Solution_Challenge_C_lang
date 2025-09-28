@@ -22,8 +22,10 @@ int addAirplan(char (*model)[100], int *capacity, int *status, char (*enterDate)
         printf("le nomber qu'est vous entrez n'est pas disponible\n");
         return 0;
     }
+
     printf("Enter la date de la enter d'avoin (jj/mm/yyyy): ");
     scanf("%s", &enterDate[index]);
+    printf("date entrie est %s", enterDate[index]);
     printf("L'avoin est ajouter successfully\n");
     return 1;
 }
@@ -206,11 +208,12 @@ void delete(int *ids, char (*model)[100], int *capacity, int *status, char (*ent
     //     ids[i] = ids[i + 1];
     //     strcpy(enterDate[i], enterDate[i + 1]);
     // }
-    strcpy(model[currentIndex], "");
+    ///////////
+    // strcpy(model[currentIndex], "");
     capacity[currentIndex] = -1;
     status[currentIndex] = -1;
     ids[currentIndex] = -1;
-    strcpy(enterDate[currentIndex], "");
+    // strcpy(enterDate[currentIndex], "");
     // }
 }
 
@@ -238,7 +241,7 @@ void displayTable(int *ids, char (*model)[100], int *capacity, int *status, char
         printf("\t%s\t\t||", model[i]);
         printf("\t%d\t\t||", capacity[i]);
 
-        char ste[10];
+        char ste[20];
         switch (status[i])
         {
         case 1:
@@ -263,9 +266,87 @@ void displayTable(int *ids, char (*model)[100], int *capacity, int *status, char
 
 void sort(int *ids, char (*model)[100], int *capacity, int *status, char (*enterDate)[100], int lastIndex)
 {
+    int userChoise;
+    printf("choisir votre option pour trier les avions, 1. par capacity, 2. par model: ");
+    scanf("%d", &userChoise);
+    if (userChoise == 1)
+    {
+        //// {2,3,4,1,0,9,7,6};
+        for (int i = 0; i <= lastIndex; i++)
+        {
+            for (int j = i + 1; j <= lastIndex; j++)
+            {
+                if (capacity[i] >= capacity[j])
+                {
+                    int saveids = ids[i];
+                    ids[i] = ids[j];
+                    ids[j] = saveids;
+                    ////////////////////////////
+                    char saveModel[100];
+                    strcpy(saveModel, model[i]);
+                    strcpy(model[i], model[j]);
+                    strcpy(model[j], saveModel);
 
-    printf("choisir votre option pour trier les avois, 1. par capacity, 2. par model: ");
-    // scanf("%d");
+                    ////////////////////////////
+                    int saveStatus = status[i];
+                    status[i] = status[j];
+                    status[j] = saveStatus;
+                    ////////////////////////////
+                    int saveCapacity = capacity[i];
+                    capacity[i] = capacity[j];
+                    capacity[j] = saveCapacity;
+                    ////////////////////////////
+                    char saveEnterDate[100];
+                    strcpy(saveEnterDate, enterDate[i]);
+                    strcpy(enterDate[i], enterDate[j]);
+                    strcpy(enterDate[j], saveEnterDate);
+                    ////////////////////////////
+                }
+            }
+        }
+    }
+    else if (userChoise == 2)
+    {
+        for (int i = 0; i <= lastIndex; i++)
+        {
+            for (int j = i + 1; j <= lastIndex; j++)
+            {
+                int result = strcmp(model[i], model[j]);
+
+                if (result > 0)
+                {
+                    int saveids = ids[i];
+                    ids[i] = ids[j];
+                    ids[j] = saveids;
+                    ////////////////////////////
+                    char saveModel[100];
+                    strcpy(saveModel, model[i]);
+                    strcpy(model[i], model[j]);
+                    strcpy(model[j], saveModel);
+
+                    ////////////////////////////
+                    int saveStatus = status[i];
+                    status[i] = status[j];
+                    status[j] = saveStatus;
+                    ////////////////////////////
+                    int saveCapacity = capacity[i];
+                    capacity[i] = capacity[j];
+                    capacity[j] = saveCapacity;
+                    ////////////////////////////
+                    char saveEnterDate[100];
+                    strcpy(saveEnterDate, enterDate[i]);
+                    strcpy(enterDate[i], enterDate[j]);
+                    strcpy(enterDate[j], saveEnterDate);
+                    ////////////////////////////
+                }
+            }
+        }
+    }
+    else
+    {
+        printf("tu est enter un numero, qui est n'est pas en 1, 2 ");
+        return;
+    }
 }
 
 int indexOFID(int id, int *ids, int lastID)

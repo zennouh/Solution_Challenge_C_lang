@@ -79,8 +79,7 @@ void main()
             displayTable(ids, model, capacities, status, enterDate, lastIndex);
             break;
         case 6:
-            printf("choix 6");
-
+            sort(ids, model, capacities, status, enterDate, lastIndex);
             break;
         case 7:
             return;
